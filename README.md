@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sachinsudheendra/kite_connect.svg?branch=master)](https://travis-ci.org/sachinsudheendra/kite_connect) [![Code Climate](https://codeclimate.com/github/sachinsudheendra/kite_connect/badges/gpa.svg)](https://codeclimate.com/github/sachinsudheendra/kite_connect) [![Code Climate](https://codeclimate.com/github/sachinsudheendra/kite_connect/badges/gpa.svg)](https://codeclimate.com/github/sachinsudheendra/kite_connect)
+[![Build Status](https://travis-ci.org/sachinsudheendra/kite_connect.svg?branch=master)](https://travis-ci.org/sachinsudheendra/kite_connect) [![Code Climate](https://codeclimate.com/github/sachinsudheendra/kite_connect/badges/gpa.svg)](https://codeclimate.com/github/sachinsudheendra/kite_connect) [![Test Coverage](https://codeclimate.com/github/sachinsudheendra/kite_connect/badges/coverage.svg)](https://codeclimate.com/github/sachinsudheendra/kite_connect/coverage)
 
 # KiteConnect
 

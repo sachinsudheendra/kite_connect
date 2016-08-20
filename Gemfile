@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem "addressable"
+gem "unirest"
 
 group :test do
   gem "rake", "~> 10.0"

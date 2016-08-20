@@ -19,17 +19,44 @@ describe KiteConnectClient do
     }
 
     it 'should retrieve token for the user' do
-      response = TestResponse.new(200, {'status' => 'success', 'data' => {}})
-      expect(Unirest).to receive(:post).with(Endpoints.construct_url(Endpoints::TOKEN), parameters: request_params).and_return(response)
+      expect(Unirest).to receive(:post).with(Endpoints.url(Endpoints::TOKEN), parameters: request_params).and_return(TestResponse.token_success)
       token = client.request_access_token 'request_token', 'test_api_secret'
+      expect(token).to_not be_nil
     end
 
     it 'should throw up when failed to retrieve token for the user' do
-      response = TestResponse.new(400, {'status' => 'error', 'data' => {}})
-      expect(Unirest).to receive(:post).with(Endpoints.construct_url(Endpoints::TOKEN), parameters: request_params).and_return(response)
+      expect(Unirest).to receive(:post).with(Endpoints.url(Endpoints::TOKEN), parameters: request_params).and_return(TestResponse.token_error)
       expect {
         token = client.request_access_token 'request_token', 'test_api_secret'
       }.to raise_error(RuntimeError)
+    end
+  end
+
+  describe :logout do
+    let(:request_params) {
+      {
+        api_key: client.api_key,
+        access_token: 'test_access_token'
+      }
+    }
+    let(:token) {Token.new({access_token: 'test_access_token'})}
+
+    before :each do
+      client.instance_variable_set :@token , token
+    end
+
+    it 'should logout session' do
+      expect(Unirest).to receive(:delete).with(Endpoints.url(Endpoints::LOGOUT), parameters: request_params).and_return(TestResponse.success)
+      client.logout
+      expect(client.token).to be_nil
+    end
+
+    it 'should not clear token if logout fails' do
+      expect(Unirest).to receive(:delete).with(Endpoints.url(Endpoints::LOGOUT), parameters: request_params).and_return(TestResponse.error)
+      expect {
+        client.logout
+      }.to raise_error(RuntimeError)
+      expect(client.token).to be(token)
     end
   end
 end

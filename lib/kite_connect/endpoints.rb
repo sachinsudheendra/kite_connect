@@ -5,6 +5,8 @@ module Endpoints
   LOGIN = "/connect/login"
   TOKEN = "/session/token"
   LOGOUT = "/session/token"
+  EQUITY_MARGIN = "/user/margins/equity"
+  COMMODITY_MARGIN = "/user/margins/commodity"
 
   def self.url path
     params = {host: Endpoints::HOST, path: path}

@@ -23,18 +23,44 @@ class KiteConnectClient
     if response.code == 200 && response.body['status'] === KiteResponse::SUCCESS
       @token = Token.new response.body['data']
     else
-      raise RuntimeError, response.body.inspect
+      fail response
     end
     @token
   end
 
   def logout
-    params = {api_key: @api_key, access_token: @token.access_token}
-    response = Unirest.delete Endpoints.url(Endpoints::LOGOUT), parameters: params
+    response = Unirest.delete Endpoints.url(Endpoints::LOGOUT), parameters: default_params
     if response.code == 200
       @token = nil
     else
-      raise RuntimeError, "Failed to logout. Response #{response.body}"
+      fail response
     end
+  end
+
+  def equity_margin
+    margin Endpoints::EQUITY_MARGIN
+  end
+
+  def commodity_margin
+    margin Endpoints::COMMODITY_MARGIN
+  end
+
+  private
+
+  def margin path
+    response = Unirest.get Endpoints.url(path), parameters: default_params
+    if response.code == 200 && response.body['status'] == KiteResponse::SUCCESS
+      return Margin.new response.body['data']
+    else
+      fail response
+    end
+  end
+
+  def fail response
+    raise RuntimeError, "[ERROR] Request failed. Response #{response.body}"
+  end
+
+  def default_params
+    {api_key: @api_key, access_token: @token.access_token}
   end
 end

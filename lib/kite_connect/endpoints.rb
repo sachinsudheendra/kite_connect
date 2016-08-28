@@ -7,6 +7,7 @@ module Endpoints
   LOGOUT = "/session/token"
   EQUITY_MARGIN = "/user/margins/equity"
   COMMODITY_MARGIN = "/user/margins/commodity"
+  ORDERS = "/orders"
 
   def self.url path
     params = {host: Endpoints::HOST, path: path}

@@ -64,15 +64,15 @@ describe KiteConnectClient do
       expect(Unirest).to receive(:get).with(Endpoints.url(Endpoints::EQUITY_MARGIN), parameters: request_params).and_return(TestResponse.margin_success)
       margin = client.equity_margin
       expect(margin).to_not be_nil
-      expect(margin.enabled?).to be(true)
-      expect(margin.net).to be(1230.0)
-      expect(margin.available).to eq({
+      expect(margin[:enabled]).to be(true)
+      expect(margin[:net]).to be(1230.0)
+      expect(margin[:available]).to eq({
         "cash": 1110.0,
         "intraday_payin": 230.0,
         "adhoc_margin": 3230.0,
         "collateral": 43240.0
       })
-      expect(margin.utilised).to eq({
+      expect(margin[:utilised]).to eq({
         "m2m_unrealised": 0.0,
         "m2m_realised": 0.0,
         "debits": 0.0,
